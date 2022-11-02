@@ -18,6 +18,7 @@ public class Exercise01
 			System.out.println("5. Save student list binary file: ");
 			System.out.println("6. Import student csv file: ");
 			System.out.println("7. Export student csv file: ");
+			System.out.println("Chose difference chosen to exit");
 			System.out.print("Chose action: ");
 			choice = s.nextInt();
 			s.nextLine();
@@ -105,8 +106,12 @@ public class Exercise01
 
 			}
 			else if (choice == 6){
+				String fileName;
+				System.out.println();
+				System.out.print("Enter name of file you want to import: ");
+				fileName = s.nextLine();
 				try{
-					BufferedReader br = new BufferedReader(new FileReader("student.txt"));
+					BufferedReader br = new BufferedReader(new FileReader(fileName));
 					String line;
 					while ((line = br.readLine()) != null) {
 						String[] values = line.split(", ");
@@ -122,8 +127,12 @@ public class Exercise01
 
 			}
 			else if (choice == 7){
+				String fileName;
+				System.out.println();
+				System.out.print("Enter name of file you want to export: ");
+				fileName = s.nextLine();
 				try{
-					FileWriter fw = new FileWriter("student.txt");
+					FileWriter fw = new FileWriter(fileName);
 					for (int i = 0; i < v.size(); i++)
 					{
 						fw.write(String.valueOf(v.get(i).getID()));
@@ -136,6 +145,7 @@ public class Exercise01
 						fw.write("\n");
 					}
 					fw.close();
+					System.out.println("Import Success!");
 				}
 				catch(IOException e){
 					System.out.println("Error message: " + e);
