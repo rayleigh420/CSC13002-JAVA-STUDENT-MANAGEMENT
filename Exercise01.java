@@ -69,23 +69,34 @@ public class Exercise01
 						System.out.println("Anything else to exit");
 						System.out.print("What kind do you want: ");
 						c = s.nextInt();
+						s.nextLine();
 
+						System.out.println();
 						if (c == 1){
+							System.out.print("Enter new id: ");
+							id = s.nextLine();
 
+							v.get(i).setID(id);
 						}
 						else if (c == 2){
-							
+							System.out.print("Enter new name: ");
+							name = s.nextLine();
+
+							v.get(i).setName(name);
 						}
 						else if (c == 3){
+							System.out.print("Enter new GPA: ");
+							GPA = Double.parseDouble(s.nextLine());
 
+							v.get(i).setGPA(GPA);
 						}
 						else if (c == 4){
-							
+							System.out.print("Enter new address: ");
+							address = s.nextLine();
+
+							v.get(i).setAddress(address);
 						}
 						else if (c == 5){
-
-						}
-						else {
 							System.out.print("Enter new id: ");
 							id = s.nextLine();
 							System.out.print("Enter new name: ");
@@ -96,6 +107,9 @@ public class Exercise01
 							address = s.nextLine();
 
 							v.get(i).updateInfo(id, name, GPA, address);
+						}
+						else {
+							break;
 						}
 
 					}
@@ -164,20 +178,24 @@ public class Exercise01
 			else if (choice == 5){
 				String fileName;
 				System.out.println();
-				System.out.print("Enter name of file you want to export: ");
+				System.out.print("Enter name of file you want to save: ");
 				fileName = s.nextLine();
 
-				try {
+				try (
 					FileOutputStream fos = new FileOutputStream(fileName);
 					BufferedOutputStream bos = new BufferedOutputStream(fos);
 					DataOutputStream dos = new DataOutputStream(bos);
+				){
 
 					for (int i = 0; i < v.size(); i++){
 						dos.writeBytes(v.get(i).getID());
+						dos.writeBytes(v.get(i).getName());
+						dos.writeDouble(v.get(i).getGPA());
+						dos.writeBytes(v.get(i).getAddress());
 					}
 
 					dos.close();
-					System.out.println("Save success!")";"
+					System.out.println("Save success!");
 				}
 				catch(IOException e){
 					System.out.println("Error message: " + e);
@@ -188,8 +206,9 @@ public class Exercise01
 				System.out.println();
 				System.out.print("Enter name of file you want to import: ");
 				fileName = s.nextLine();
-				try{
+				try(
 					BufferedReader br = new BufferedReader(new FileReader(fileName));
+				){
 					String line;
 					while ((line = br.readLine()) != null) {
 						String[] values = line.split(", ");
@@ -209,8 +228,9 @@ public class Exercise01
 				System.out.println();
 				System.out.print("Enter name of file you want to export: ");
 				fileName = s.nextLine();
-				try{
+				try(
 					FileWriter fw = new FileWriter(fileName);
+				){
 					for (int i = 0; i < v.size(); i++)
 					{
 						fw.write(String.valueOf(v.get(i).getID()));
