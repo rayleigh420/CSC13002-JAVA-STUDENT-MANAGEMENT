@@ -46,7 +46,7 @@ public class Exercise01
 			}		
 			else if (choice == 2){
 				System.out.println();
-				System.out.println("Add new student");
+				System.out.println("Update student");
 
 				String id, name, address;
 				double GPA;
@@ -59,16 +59,45 @@ public class Exercise01
 					if (v.get(i).getID().equals(id)){
 						update = true;
 
-						System.out.print("Enter new id: ");
-						id = s.nextLine();
-						System.out.print("Enter new name: ");
-						name = s.nextLine();
-						System.out.print("Enter new GPA: ");
-						GPA = Double.parseDouble(s.nextLine());
-						System.out.print("Enter new address: ");
-						address = s.nextLine();
+						int c;
+						System.out.println();
+						System.out.println("1. Update ID");
+						System.out.println("2. Update Name");
+						System.out.println("3. Update GPA");
+						System.out.println("4. Update address");
+						System.out.println("5. Update all");
+						System.out.println("Anything else to exit");
+						System.out.print("What kind do you want: ");
+						c = s.nextInt();
 
-						v.get(i).updateInfo(id, name, GPA, address);
+						if (c == 1){
+
+						}
+						else if (c == 2){
+							
+						}
+						else if (c == 3){
+
+						}
+						else if (c == 4){
+							
+						}
+						else if (c == 5){
+
+						}
+						else {
+							System.out.print("Enter new id: ");
+							id = s.nextLine();
+							System.out.print("Enter new name: ");
+							name = s.nextLine();
+							System.out.print("Enter new GPA: ");
+							GPA = Double.parseDouble(s.nextLine());
+							System.out.print("Enter new address: ");
+							address = s.nextLine();
+
+							v.get(i).updateInfo(id, name, GPA, address);
+						}
+
 					}
 				}
 
@@ -78,7 +107,7 @@ public class Exercise01
 			}
 			else if (choice == 3){
 				System.out.println();
-				System.out.println("Add new student");
+				System.out.println("Delete student");
 
 				String id;
 				System.out.print("Enter id of student you want to delete: ");
@@ -97,13 +126,62 @@ public class Exercise01
 				}			
 			}
 			else if (choice == 4){
+				int c;
+				System.out.println();
+				System.out.println("1. Sort follow GPA ascending");
+				System.out.println("2. Sort follow ID ascending");
+				System.out.println("3. Not sort list");
+				System.out.println("Anything else to exit!");
+				System.out.print("What kind do you want: ");
+				c = s.nextInt();
+
+				if (c == 1){
+					Collections.sort(v, new Comparator<Student>() {
+					@Override
+					public int compare(final Student a, Student b) {
+						return a.getGPA() < b.getGPA()? -1 : a.getGPA() == b.getGPA() ? 0 : 1;
+					}
+					});	
+				}
+				else if (c == 2){
+					Collections.sort(v, new Comparator<Student>() {
+					@Override
+					public int compare(final Student a, Student b) {
+						return a.getID().compareToIgnoreCase(b.getID());
+					}
+					});	
+				}
+				else if (c == 3){}
+				else {
+					break;
+				}
+
 				for (int i = 0; i < v.size(); i++){
 					System.out.println();
 					v.get(i).getInfo();
 				}
 			}
 			else if (choice == 5){
+				String fileName;
+				System.out.println();
+				System.out.print("Enter name of file you want to export: ");
+				fileName = s.nextLine();
 
+				try {
+					FileOutputStream fos = new FileOutputStream(fileName);
+					BufferedOutputStream bos = new BufferedOutputStream(fos);
+					DataOutputStream dos = new DataOutputStream(bos);
+
+					for (int i = 0; i < v.size(); i++){
+						dos.writeBytes(v.get(i).getID());
+					}
+
+					dos.close();
+					System.out.println("Save success!")";"
+				}
+				catch(IOException e){
+					System.out.println("Error message: " + e);
+				}
 			}
 			else if (choice == 6){
 				String fileName;
@@ -119,7 +197,7 @@ public class Exercise01
 						v.add(st);
 					}
 					br.close();
-					System.out.println("Export Success!");
+					System.out.println("Import Success!");
 				}
 				catch(IOException e){
 					System.out.println("Error message: " + e);
@@ -145,7 +223,7 @@ public class Exercise01
 						fw.write("\n");
 					}
 					fw.close();
-					System.out.println("Import Success!");
+					System.out.println("Export Success!");
 				}
 				catch(IOException e){
 					System.out.println("Error message: " + e);
@@ -192,6 +270,22 @@ class Student {
 
 	public String getAddress(){
 		return this.address;
+	}
+
+	public void setID(String id){
+		this.id = id;
+	}
+
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public void setGPA(Double GPA){
+		this.GPA = GPA;
+	}
+
+	public void setAddress(String address){
+		this.address = address;
 	}
 
 	public void updateInfo(String id, String name, double GPA, String address){
