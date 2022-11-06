@@ -182,19 +182,16 @@ public class Exercise01
 				fileName = s.nextLine();
 
 				try (
-					FileOutputStream fos = new FileOutputStream(fileName);
-					BufferedOutputStream bos = new BufferedOutputStream(fos);
-					DataOutputStream dos = new DataOutputStream(bos);
+					DataOutputStream outStream = new DataOutputStream(new FileOutputStream ("a3.out"));
 				){
-
-					for (int i = 0; i < v.size(); i++){
-						dos.writeBytes(v.get(i).getID());
-						dos.writeBytes(v.get(i).getName());
-						dos.writeDouble(v.get(i).getGPA());
-						dos.writeBytes(v.get(i).getAddress());
+					for (int i = 0; i < v.size(); i++) {
+						outStream.writeUTF(v.get(i).getID());
+						outStream.writeUTF(v.get(i).getName());
+						outStream.writeDouble(v.get(i).getGPA());
+						outStream.writeUTF(v.get(i).getAddress());
 					}
 
-					dos.close();
+					outStream.close();
 					System.out.println("Save success!");
 				}
 				catch(IOException e){
